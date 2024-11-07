@@ -40,7 +40,7 @@ public class EditUser extends javax.swing.JDialog {
     public EditUser(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-//        loadData();
+        loadData();
 //        System.out.println(getId());
         
     }

@@ -355,7 +355,8 @@ public class TambahUser extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
+        this.setVisible(false)
+                ;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -440,8 +441,8 @@ public class TambahUser extends javax.swing.JDialog {
         Connection conn = Koneksi.Go();
         if (!Password1.equals(Password2) ){
             JOptionPane.showMessageDialog(this, "pasword tidak sama");
-            System.out.println(Password1);
-            System.out.println(Password2);
+//            System.out.println(Password1);
+//            System.out.println(Password2);
         }else {
             try {
                 String checkUsernameQuery = "SELECT * FROM akun WHERE username = ?";
