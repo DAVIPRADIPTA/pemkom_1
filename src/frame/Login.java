@@ -179,7 +179,7 @@ public class Login extends javax.swing.JFrame {
             }
 //            System.out.println(Status);
             if(Status >= 1 ){
-                Function.logActivity("Login berhasil \n");
+                Function.logActivity("Login berhasil " + up.getUsername() +"\n");
                  switch(up.getRole()) {
                     case "Admin":
                         DashboardAdmin admin = new DashboardAdmin(up);

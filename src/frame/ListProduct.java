@@ -283,6 +283,8 @@ public class ListProduct extends javax.swing.JPanel {
 
             model.addRow(new Object[]{id, no, nama_produk, kode_produk, deskripsi, kategori, harga_jual, harga_beli, stok, suplayer});
         }
+        DataProduk.getColumnModel().getColumn(0).setMinWidth(0);
+        DataProduk.getColumnModel().getColumn(0).setMaxWidth(0);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Gagal mengambil data: " + e.getMessage());
         }
