@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package frame;
+package Admin;
 
+import app.Koneksi;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;

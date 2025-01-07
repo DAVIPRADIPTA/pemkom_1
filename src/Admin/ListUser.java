@@ -3,8 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package frame;
+package Admin;
 
+import app.Koneksi;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -206,7 +207,7 @@ public class ListUser extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -221,7 +222,7 @@ public class ListUser extends javax.swing.JPanel {
         if(n != -1){
             int id = Integer.parseInt(DataUser.getValueAt(n, 0).toString());
             System.out.println(id);
-             DashboardAdmin DA = new DashboardAdmin();
+             PageAdmin DA = new PageAdmin();
             EditUser U = new EditUser(DA, true);
             U.setId(id);
             U.loadData();
@@ -282,7 +283,7 @@ public class ListUser extends javax.swing.JPanel {
 
     private void TambahUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TambahUserActionPerformed
         // TODO add your handling code here:
-        DashboardAdmin DA = new DashboardAdmin();
+        PageAdmin DA = new PageAdmin();
         TambahUser tambahUserForm = new TambahUser(DA, true);
         tambahUserForm.setVisible(true);
     }//GEN-LAST:event_TambahUserActionPerformed

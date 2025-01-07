@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package frame;
+package app;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
@@ -25,7 +25,7 @@ public class Koneksi {
             Connection c = m.getConnection();
             //System.out.println("Sukses terhubung");
             return c;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.err.println("GAGAL terhubung\n"+e.getMessage());
         }
         

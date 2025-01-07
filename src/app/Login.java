@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package frame;
+package app;
 
+import Admin.PageAdmin;
+import Owner.PageOwner;
+import Kasir.Transaksi1;
 import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -182,18 +185,18 @@ public class Login extends javax.swing.JFrame {
                 Function.logActivity("Login berhasil " + up.getUsername() +"\n");
                  switch(up.getRole()) {
                     case "Admin":
-                        DashboardAdmin admin = new DashboardAdmin(up);
+                        PageAdmin admin = new PageAdmin(up);
                         admin.setVisible(true);
 //                        new EditUser().setVisible(true);
                         this.setVisible(false);
                         break;
                     case "Kasir":
-                        DashboardAdmin kasir = new DashboardAdmin(up);
+                        Transaksi1 kasir = new Transaksi1(up);
                         kasir.setVisible(true);
                         this.setVisible(false);
                         break;
                     case "Owner":
-                        DashboardOwner owner = new DashboardOwner(up);
+                        PageOwner owner = new PageOwner(up);
                         owner.setVisible(true);
                         this.setVisible(false);
                         break;

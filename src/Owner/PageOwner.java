@@ -2,8 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package frame;
+package Owner;
 
+import Admin.ListProduct;
+import Admin.DashboardAdmin;
+import Admin.ListUser;
+import app.MenuItem;
+import app.UserProfile;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,13 +19,13 @@ import javax.swing.JFrame;
  *
  * @author asus
  */
-public class DashboardKasir extends javax.swing.JFrame {
+public class PageOwner extends javax.swing.JFrame {
 
     /**
      * Creates new form DashboardAdmin
      */
     UserProfile up;
-    public DashboardKasir() {
+    public PageOwner() {
         initComponents();
       
         
@@ -29,9 +34,9 @@ public class DashboardKasir extends javax.swing.JFrame {
 //        execute();
     }
 
-    DashboardKasir(UserProfile up) {
+    public PageOwner(UserProfile up) {
         initComponents();
-//        execute();
+        execute();
     }
 
     /**
@@ -138,7 +143,7 @@ public class DashboardKasir extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        panel_utama.add(new Dashboard());
+        panel_utama.add(new DashboardAdmin());
         panel_utama.repaint();
         panel_utama.revalidate();
     }//GEN-LAST:event_formWindowOpened
@@ -160,14 +165,46 @@ public class DashboardKasir extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DashboardKasir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageOwner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DashboardKasir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageOwner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DashboardKasir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageOwner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DashboardKasir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageOwner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -204,7 +241,7 @@ public class DashboardKasir extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DashboardKasir().setVisible(true);
+                new PageOwner().setVisible(true);
             }
         });
     }
@@ -224,21 +261,24 @@ public class DashboardKasir extends javax.swing.JFrame {
         ImageIcon iconDashboard = new ImageIcon(getClass().getResource("/img/dashboard_icon.png"));
         ImageIcon iconUser = new ImageIcon(getClass().getResource("/img/user_icon.png"));
         ImageIcon iconProduct = new ImageIcon(getClass().getResource("/img/product_icon.png"));
+        ImageIcon iconPenjualan = new ImageIcon(getClass().getResource("/img/product_icon.png"));
+        ImageIcon iconKinerjaKasir = new ImageIcon(getClass().getResource("/img/product_icon.png"));
+
         
         MenuItem dashboard = new MenuItem(iconDashboard, false, null, "Dashboard", new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 panel_utama.removeAll();
-                panel_utama.add(new Dashboard());
+                panel_utama.add(new DashboardOwner());
                 panel_utama.repaint();
                 panel_utama.revalidate();
             }
             });
-        MenuItem user = new MenuItem(iconUser, false, null, "User", new ActionListener(){
+        MenuItem Penjualan = new MenuItem(iconUser, false, null, "Penjualan", new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 panel_utama.removeAll();
-                panel_utama.add(new ListUser());
+                panel_utama.add(new Penjualan());
                 panel_utama.repaint();
                 panel_utama.revalidate();
             }
@@ -247,13 +287,22 @@ public class DashboardKasir extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 panel_utama.removeAll();
-                panel_utama.add(new ListProduct());
+                panel_utama.add(new Product());
                 panel_utama.repaint();
                 panel_utama.revalidate();
             }
-            });  
+            });
+        MenuItem KinerjaKasir = new MenuItem(iconProduct, false, null, "KinerjaKasir", new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel_utama.removeAll();
+                panel_utama.add(new KinerjaKasir());
+                panel_utama.repaint();
+                panel_utama.revalidate();
+            }
+            }); 
         
-        addMenu(dashboard, user, product);
+        addMenu(dashboard, Penjualan, product, KinerjaKasir);
         
     }
     private void addMenu (MenuItem...menu){

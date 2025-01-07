@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package frame;
+package Admin;
 
+import app.Koneksi;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -150,7 +151,7 @@ public class ListProduct extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        DashboardAdmin DA = new DashboardAdmin();
+        PageAdmin DA = new PageAdmin();
         TambahProduct tambahProductForm = new TambahProduct(DA, true);
         tambahProductForm.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -173,7 +174,7 @@ public class ListProduct extends javax.swing.JPanel {
         if(n != -1){
             int id = Integer.parseInt(DataProduk.getValueAt(n, 0).toString());
             System.out.println(id);
-            DashboardAdmin DA = new DashboardAdmin();
+            PageAdmin DA = new PageAdmin();
             EditProduct U = new EditProduct(DA, true);
             U.setId(id);
             U.loadData();

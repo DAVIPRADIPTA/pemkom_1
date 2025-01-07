@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package frame;
+package Admin;
 
+import app.Koneksi;
 import java.awt.Image;
 import java.io.File;
 import java.nio.file.Files;
@@ -14,21 +15,35 @@ import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import java.sql.SQLException;
+
 
 /**
  *
  * @author asus
  */
-public class TambahUser extends javax.swing.JDialog {
+public class EditUser extends javax.swing.JDialog {
 
     /**
      * Creates new form TambahUser
      */
+    int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     String fileName;
     private File filePath;
-    public TambahUser(java.awt.Frame parent, boolean modal) {
+    public EditUser(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        loadData();
+//        System.out.println(getId());
+        
     }
 
     /**
@@ -67,7 +82,7 @@ public class TambahUser extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("TAMBAH USER");
+        jLabel1.setText("Edit User");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Nama");
@@ -95,7 +110,7 @@ public class TambahUser extends javax.swing.JDialog {
         jButton1.setBackground(new java.awt.Color(51, 204, 0));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Tambah");
+        jButton1.setText("Simpan");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -147,6 +162,13 @@ public class TambahUser extends javax.swing.JDialog {
         TxtPassword1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TxtPassword1ActionPerformed(evt);
+            }
+        });
+
+        TxtPassword2.setText("jPasswordField1");
+        TxtPassword2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtPassword2ActionPerformed(evt);
             }
         });
 
@@ -306,7 +328,7 @@ public class TambahUser extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        tambahUser();
+        simpanUser();
 //        clearForm();
         
 
@@ -355,9 +377,12 @@ public class TambahUser extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false)
-                ;
+        
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void TxtPassword2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtPassword2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtPassword2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -376,20 +401,21 @@ public class TambahUser extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TambahUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TambahUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TambahUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TambahUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TambahUser dialog = new TambahUser(new javax.swing.JFrame(), true);
+                EditUser dialog = new EditUser(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -424,8 +450,41 @@ public class TambahUser extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel label_foto;
     // End of variables declaration//GEN-END:variables
+    
+    public void loadData() {
+        int id = getId(); 
+        try {
+            Connection conn = Koneksi.Go();
+            String Query = "SELECT * FROM akun INNER JOIN profil ON akun.id_akun = profil.id_akun WHERE akun.id_akun = ?;";
+            PreparedStatement PS = conn.prepareStatement(Query);
+//            System.out.println(id);
+            PS.setInt(1, id);
+            
+            ResultSet RS = PS.executeQuery();
+            if(RS.next()){
+                TxtNama.setText(RS.getString("nama_lengkap"));
+                TxtAlamat.setText(RS.getString("alamat"));
+                TxtNo.setText(RS.getString("nomor_telepon"));
+                TxtPassword1.setText(RS.getString("password"));
+                TxtPassword2.setText(RS.getString("password"));
+                TxtUsername.setText(RS.getString("username"));
+                RoleUser.setSelectedItem(RS.getString("role"));
+                ImageIcon icon = new ImageIcon(RS.getString("path_gambar").toString());
+                Image img = icon.getImage().getScaledInstance(label_foto.getWidth(),label_foto.getHeight(), Image.SCALE_DEFAULT);
+                ImageIcon ic = new ImageIcon(img);
+                label_foto.setIcon(ic);
+            }
+            
+        } catch (Exception e) {
+            
+            System.out.println(e.getMessage());
+        }
+        
+        
+        
+    }
 
-    private void tambahUser() {
+    private void simpanUser() {
         String Nama = TxtNama.getText();
         String No_hp = TxtNo.getText();
         String Alamat = TxtAlamat.getText();
@@ -434,81 +493,67 @@ public class TambahUser extends javax.swing.JDialog {
         String Password1 = new String (TxtPassword1.getPassword());
         String Password2 = new String (TxtPassword2.getPassword());
         String Role = RoleUser.getSelectedItem().toString();
-             
-//        Koneksi koneksi = new Koneksi();
-//        koneksi.connect(); //
-//        Connection conn = koneksi.getCon();
-        Connection conn = Koneksi.Go();
+        
+        Connection conn = null;
+        PreparedStatement psAkun = null;
+        PreparedStatement psProfil = null;
+        
         if (!Password1.equals(Password2) ){
             JOptionPane.showMessageDialog(this, "pasword tidak sama");
-//            System.out.println(Password1);
-//            System.out.println(Password2);
+            System.out.println(Password1);
+            System.out.println(Password2);
         }else {
             try {
-                String checkUsernameQuery = "SELECT * FROM akun WHERE username = ?";
-                PreparedStatement checkUsernamePS = conn.prepareStatement(checkUsernameQuery);
-                checkUsernamePS.setString(1, Username);
-                ResultSet checkUsernameRS = checkUsernamePS.executeQuery();
-                
-                if(checkUsernameRS.next()){
-                    JOptionPane.showMessageDialog(this, "Username sudah terdaftar");
-                }else{
-                    String QueryAkun = "INSERT INTO akun "
-                        + "(username,password,role) "
-                        + "VALUES (?,?,?) ";
-
-                    PreparedStatement PS1;
-                    PS1 = conn.prepareStatement(QueryAkun,Statement.RETURN_GENERATED_KEYS);
-                    PS1.setString(1, Username);
-                    PS1.setString(2, Password1);
-                    PS1.setString(3, Role);
-                    PS1.executeUpdate();
-
-                    ResultSet rs = PS1.getGeneratedKeys();
-                    int lastInsertedId = 0;
-                    if (rs.next()) {
-                        lastInsertedId = rs.getInt(1);
-                    }
-                    
-                    String ext = this.fileName.substring(fileName.lastIndexOf('.')+1);
-                    if (!ext.equals("png") && !ext.equals("jpeg") && !ext.equals("jpg")){
-                        JOptionPane.showMessageDialog(null, "file harus berupa jpg, png,jpeg");
-                    }else {
-                        String newpath = "src/img_user";
-                        File directory = new File(newpath);
-                        if (!directory.exists()){
-                            directory.mkdirs();
-                        }
-                        File fileAwal = null;
-                        File fileAkhir = null;
-
-
-                        fileAwal = new File(fileName);
-                        fileAkhir = new File(newpath+"/"+TxtUsername.getText()+"."+ext); System.out.println(fileAkhir);
-                        this.filePath = fileAkhir;
-                        Files.copy(fileAwal.toPath(),fileAkhir.toPath());
-                        
-                    }
-                    
-                    String QueryProfil = "INSERT INTO profil "
-                        + "(id_akun,nama_lengkap,alamat,nomor_telepon,path_gambar) "
-                        + "VALUES (?,?,?,?,?)";
-                    PreparedStatement PS2 = conn.prepareStatement(QueryProfil);
-                    PS2.setInt(1, lastInsertedId);
-                    PS2.setString(2, Nama);
-                    PS2.setString(3, Alamat);
-                    PS2.setString(4, No_hp);
-                    PS2.setString(5, filePath.toString());
-                    PS2.executeUpdate();
-                    JOptionPane.showMessageDialog(this, "Data berhasil disimpan");
-                }  
-            } catch (Exception e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(this,  
-                "Error: " + e.getMessage());
+            conn = Koneksi.Go();
+            
+            String checkUsernameQuery = "SELECT * FROM akun WHERE username = ?";
+            PreparedStatement checkUsernamePS = conn.prepareStatement(checkUsernameQuery);
+            checkUsernamePS.setString(1, Username);
+            ResultSet checkUsernameRS = checkUsernamePS.executeQuery();
+            
+            if(checkUsernameRS.next()){
+                JOptionPane.showMessageDialog(this, "Username sudah terdaftar");
+            }else{
+                conn.setAutoCommit(false); 
+                String updateAkunQuery = "UPDATE akun SET username = ?,password = ?, role = ? WHERE id_akun = ?";
+                String updateProfilQuery = "UPDATE profil SET nama_lengkap = ?,alamat = ?,nomor_telepon= ? WHERE id_akun = ?";
+            
+                psAkun = conn.prepareStatement(updateAkunQuery);
+                psAkun.setString(1, Username);
+                psAkun.setString(2, Password2);
+                psAkun.setString(3, Role);
+                psAkun.setInt(4, getId());
+                psAkun.executeUpdate();
+            
+                psProfil = conn.prepareStatement(updateProfilQuery);
+                psProfil.setString(1, Nama);
+                psProfil.setString(2, Alamat);
+                psProfil.setString(3, No_hp);
+                psProfil.setInt(4, getId());
+            
+                conn.commit();
+            
+                System.out.println(getId());
+            
+                this.setVisible(false);
             }
-        }
+        } catch (SQLException e) {
+            if (conn != null) {
+            try {
+                conn.rollback(); // Membatalkan transaksi jika terjadi kesalahan
+            } catch (SQLException ex) {
+                System.out.println("Error rollback: " + ex.getMessage());
+            }}
+            System.out.println("Error: " + e.getMessage());
+        }finally {
+        try {
+            if (psAkun != null) psAkun.close();
+            if (psProfil != null) psProfil.close();
+            if (conn != null) conn.close(); // Menutup koneksi
+        } catch (SQLException e) {
+            System.out.println("Error closing resources: " + e.getMessage());
+        }}}
         
-    } 
+    }
 }
 
