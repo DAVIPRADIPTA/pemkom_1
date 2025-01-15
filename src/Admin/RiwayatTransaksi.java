@@ -26,7 +26,7 @@ public class RiwayatTransaksi extends javax.swing.JPanel {
      */
     public RiwayatTransaksi() {
         initComponents();
-        loadRiwayatTransaksi();
+        loadRiwayatTransaksiTigaHari();
     }
 
     /**
@@ -131,12 +131,12 @@ public class RiwayatTransaksi extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        viewRiwayatTransaksi();
+        loadRiwayatTransaksiCustomPeriode();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
         // TODO add your handling code here:
-        loadRiwayatTransaksi();
+        loadRiwayatTransaksiTigaHari();
     }//GEN-LAST:event_refreshActionPerformed
 
 
@@ -152,7 +152,7 @@ public class RiwayatTransaksi extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser tglSampai;
     // End of variables declaration//GEN-END:variables
 
-   private void loadRiwayatTransaksi() {
+   private void loadRiwayatTransaksiTigaHari() {
     DefaultTableModel model = (DefaultTableModel) jTableRiwayatTransaksi.getModel();
     model.setRowCount(0);
 
@@ -204,7 +204,7 @@ public class RiwayatTransaksi extends javax.swing.JPanel {
     }
 }
 
-    private void viewRiwayatTransaksi() {
+    private void loadRiwayatTransaksiCustomPeriode() {
     DefaultTableModel model = (DefaultTableModel) jTableRiwayatTransaksi.getModel();
     model.setRowCount(0);
 

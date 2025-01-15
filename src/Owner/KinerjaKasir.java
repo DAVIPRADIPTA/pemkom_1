@@ -50,6 +50,9 @@ public class KinerjaKasir extends javax.swing.JPanel {
         tglDari = new com.toedter.calendar.JDateChooser();
         tglSampai = new com.toedter.calendar.JDateChooser();
         btnLoadChart = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         panelChart = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
@@ -61,29 +64,54 @@ public class KinerjaKasir extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setText("Kinerja Kasir");
+
+        jLabel2.setText("Sampai");
+
+        jLabel3.setText("Dari");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addComponent(tglDari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(125, 125, 125)
-                .addComponent(tglSampai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101)
-                .addComponent(btnLoadChart)
-                .addContainerGap(284, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(294, 294, 294)
+                        .addComponent(jLabel1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(524, 524, 524)
+                        .addComponent(btnLoadChart)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tglDari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(tglSampai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(32, 32, 32))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnLoadChart)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(tglSampai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(tglDari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLoadChart))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 25, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(tglSampai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tglDari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(23, 23, 23))
         );
 
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
@@ -96,7 +124,7 @@ public class KinerjaKasir extends javax.swing.JPanel {
         );
         panelChartLayout.setVerticalGroup(
             panelChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 429, Short.MAX_VALUE)
+            .addGap(0, 425, Short.MAX_VALUE)
         );
 
         add(panelChart, java.awt.BorderLayout.CENTER);
@@ -124,45 +152,16 @@ public class KinerjaKasir extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoadChart;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panelChart;
     private com.toedter.calendar.JDateChooser tglDari;
     private com.toedter.calendar.JDateChooser tglSampai;
     // End of variables declaration//GEN-END:variables
-//    public Map<String, Integer> getDataKasir(String dariTanggal, String sampaiTanggal) {
-//        Map<String, Integer> dataKasir = new HashMap<>();
-//        try {
-//            Connection conn = Koneksi.Go();
-//
-//            // Query dengan join tambahan ke tabel profil
-//            String sql = "SELECT p.nama_lengkap, SUM(d.jumlah_produk) AS jumlah_terjual " +
-//                         "FROM transaksi t " +
-//                         "JOIN transaksi_detail d ON t.id_transaksi = d.id_transaksi " +
-//                         "JOIN akun a ON t.id_akun = a.id_akun " +
-//                         "JOIN profil p ON a.id_akun = p.id_akun " + // Join ke tabel profil
-//                         "WHERE t.tanggal_transaksi >= ? AND t.tanggal_transaksi <= ? " +
-//                         "GROUP BY p.nama_lengkap";
-//
-//            PreparedStatement stmt = conn.prepareStatement(sql);
-//            stmt.setString(1, dariTanggal);
-//            stmt.setString(2, sampaiTanggal);
-//
-//            ResultSet rs = stmt.executeQuery();
-//            while (rs.next()) {
-//                String namaKasir = rs.getString("nama_lengkap"); // Ambil nama kasir dari tabel profil
-//                int jumlahTerjual = rs.getInt("jumlah_terjual"); // Ambil jumlah produk terjual
-//                dataKasir.put(namaKasir, jumlahTerjual); // Simpan ke dalam map
-//            }
-//            rs.close();
-//            stmt.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return dataKasir;
-//    }
 
-
-        private void loadBarChart(JPanel panelChart, String dariTanggal, String sampaiTanggal) {
+    private void loadBarChart(JPanel panelChart, String dariTanggal, String sampaiTanggal) {
             try {
                 // Buat koneksi ke database
                 Connection conn = Koneksi.Go();

@@ -5,6 +5,7 @@
 package Kasir;
 
 import app.Koneksi;
+import app.Login;
 import app.UserProfile;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -23,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author asus
  */
-public class Transaksi1 extends javax.swing.JFrame {
+public class Transaksi extends javax.swing.JFrame {
     private PreparedStatement stat;
     private ResultSet rs;
     UserProfile up;
@@ -32,14 +33,14 @@ public class Transaksi1 extends javax.swing.JFrame {
 
 //    DefaultTableModel model = (DefaultTableModel) tblCart.getModel();
 
-    public Transaksi1() {
+    public Transaksi() {
         initComponents();
         txtID.requestFocus();
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         getProfile(up);
 
     }
-    public Transaksi1(UserProfile up) {
+    public Transaksi(UserProfile up) {
         this.up = up;
         getProfile(up);
         initComponents();
@@ -105,6 +106,7 @@ public class Transaksi1 extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         nama_kasir = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCart = new javax.swing.JTable();
@@ -244,6 +246,13 @@ public class Transaksi1 extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("Logout");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -264,6 +273,10 @@ public class Transaksi1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addContainerGap())
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +294,8 @@ public class Transaksi1 extends javax.swing.JFrame {
                     .addComponent(nama_kasir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3)
-                .addGap(33, 33, 33))
+                .addGap(10, 10, 10)
+                .addComponent(jButton4))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -500,6 +514,11 @@ public class Transaksi1 extends javax.swing.JFrame {
 //        txtIDActionPerformed(null); // Panggil event ActionPerformed
 //    }
     }//GEN-LAST:event_txtIDKeyReleased
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        Logout();
+    }//GEN-LAST:event_jButton4ActionPerformed
      
     
     /**
@@ -519,20 +538,21 @@ public class Transaksi1 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Transaksi1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Transaksi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Transaksi1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Transaksi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Transaksi1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Transaksi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Transaksi1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Transaksi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Transaksi1().setVisible(true);
+                new Transaksi().setVisible(true);
             }
         });
     }
@@ -541,6 +561,7 @@ public class Transaksi1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -594,33 +615,6 @@ public class Transaksi1 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Anda belum memilihi data"); 
         }
     }
-
-//    private void checkout() {
-//    try {
-//            //catat data transaksi
-//            Connection K = Koneksi.Go();
-//            Statement S = K.createStatement();
-//            SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd");
-//            String tgl = SDF.format(new Date());
-//            String Q = "INSERT INTO transaksi (tanggal_transaksi) VALUES ('"+tgl+"')";
-//            S.executeUpdate(Q);
-//
-//            //catat data detail transaksi
-//            int row = tblCart.getRowCount();
-//            for (int i = 0; i < row; i++) {
-//                int id = Integer.parseInt(tblCart.getValueAt(row, 0).toString());
-//                int QTY = Integer.parseInt(tblCart.getValueAt(row, 2).toString());
-//                int Price = Integer.parseInt(tblCart.getValueAt(row, 3).toString());
-//
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, e.getMessage());
-//            System.out.println(e.getMessage());
-//        }
-//
-//        Nota N = new Nota(this, false);
-//        N.setMODEL( (DefaultTableModel) tblCart.getModel());
-//        N.setVisible(true);    }
     private void checkout() {
     Connection K = null;
     PreparedStatement insertTransaksi = null;
@@ -707,6 +701,9 @@ public class Transaksi1 extends javax.swing.JFrame {
 
         // Reset tabel keranjang
         model.setRowCount(0);
+        jTextField1.setText("");
+        lblTotalHarga.setText("");
+        lblTotalHarga.setText("");
     } catch (SQLException e) {
         // Rollback jika terjadi kesalahan
         if (K != null) {
@@ -735,6 +732,21 @@ public class Transaksi1 extends javax.swing.JFrame {
        
 
     }
+
+    private void Logout() {
+        int response = JOptionPane.showConfirmDialog(this, 
+                "Apakah Anda yakin ingin LOGOUT?", 
+                "hapus", 
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        
+        if (response == JOptionPane.YES_OPTION){
+            this.setVisible(false);
+            Login l = new Login();
+            l.setVisible(true);
+        } else {
+            System.out.println("Dialog ditutup");
+        }    }
 
 
 

@@ -7,13 +7,21 @@ package Owner;
 import Admin.ListProduct;
 import Admin.DashboardAdmin;
 import Admin.ListUser;
+import app.Koneksi;
+import app.Login;
 import app.MenuItem;
 import app.UserProfile;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,19 +32,30 @@ public class PageOwner extends javax.swing.JFrame {
     /**
      * Creates new form DashboardAdmin
      */
+    private PreparedStatement stat;
+    private ResultSet rs;
     UserProfile up;
+    private String path_gambar;
+    private String nama_lengkap;
     public PageOwner() {
         initComponents();
-      
-        
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         
-//        execute();
+        execute();
     }
 
     public PageOwner(UserProfile up) {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         execute();
+        getProfile(up);
+        Icon iconPath = new ImageIcon(this.path_gambar);
+        Image image = ((ImageIcon) iconPath).getImage();
+        Image scaledImage = image.getScaledInstance(111,144, Image.SCALE_SMOOTH);
+        Icon scaledIcon = new ImageIcon(scaledImage);
+        img_profile_login.setIcon(scaledIcon);
+        name_login.setText(nama_lengkap);
+
     }
 
     /**
@@ -49,11 +68,12 @@ public class PageOwner extends javax.swing.JFrame {
     private void initComponents() {
 
         pn_navbar = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         pn_sidebar = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pn_menu = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        name_login = new javax.swing.JLabel();
+        img_profile_login = new javax.swing.JLabel();
         pn_content = new javax.swing.JPanel();
         panel_utama = new javax.swing.JPanel();
 
@@ -67,15 +87,29 @@ public class PageOwner extends javax.swing.JFrame {
         pn_navbar.setBackground(new java.awt.Color(51, 102, 255));
         pn_navbar.setPreferredSize(new java.awt.Dimension(856, 70));
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Logout?");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout pn_navbarLayout = new javax.swing.GroupLayout(pn_navbar);
         pn_navbar.setLayout(pn_navbarLayout);
         pn_navbarLayout.setHorizontalGroup(
             pn_navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 856, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_navbarLayout.createSequentialGroup()
+                .addContainerGap(785, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(22, 22, 22))
         );
         pn_navbarLayout.setVerticalGroup(
             pn_navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70, Short.MAX_VALUE)
+            .addGroup(pn_navbarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         getContentPane().add(pn_navbar, java.awt.BorderLayout.PAGE_START);
@@ -89,9 +123,9 @@ public class PageOwner extends javax.swing.JFrame {
         pn_menu.setLayout(new javax.swing.BoxLayout(pn_menu, javax.swing.BoxLayout.Y_AXIS));
         jScrollPane1.setViewportView(pn_menu);
 
-        jLabel1.setText("jLabel1");
+        name_login.setText("jLabel1");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user_login_icon.png"))); // NOI18N
+        img_profile_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user_login_icon.png"))); // NOI18N
 
         javax.swing.GroupLayout pn_sidebarLayout = new javax.swing.GroupLayout(pn_sidebar);
         pn_sidebar.setLayout(pn_sidebarLayout);
@@ -102,19 +136,19 @@ public class PageOwner extends javax.swing.JFrame {
                 .addGroup(pn_sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pn_sidebarLayout.createSequentialGroup()
                         .addGap(81, 81, 81)
-                        .addComponent(jLabel2))
+                        .addComponent(img_profile_login))
                     .addGroup(pn_sidebarLayout.createSequentialGroup()
                         .addGap(105, 105, 105)
-                        .addComponent(jLabel1)))
+                        .addComponent(name_login)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pn_sidebarLayout.setVerticalGroup(
             pn_sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_sidebarLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(jLabel2)
+                .addComponent(img_profile_login)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addComponent(name_login)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -143,10 +177,15 @@ public class PageOwner extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        panel_utama.add(new DashboardAdmin());
+        panel_utama.add(new DashboardOwner());
         panel_utama.repaint();
         panel_utama.revalidate();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        Logout();
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -247,9 +286,10 @@ public class PageOwner extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel img_profile_login;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel name_login;
     private javax.swing.JPanel panel_utama;
     private javax.swing.JPanel pn_content;
     private javax.swing.JPanel pn_menu;
@@ -315,4 +355,49 @@ public class PageOwner extends javax.swing.JFrame {
         }
         pn_menu.revalidate();
     }
+
+    private void Logout() {
+        int response = JOptionPane.showConfirmDialog(this, 
+                "Apakah Anda yakin ingin LOGOUT?", 
+                "hapus", 
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        
+        if (response == JOptionPane.YES_OPTION){
+            this.setVisible(false);
+            Login l = new Login();
+            l.setVisible(true);
+        } else {
+            System.out.println("Dialog ditutup");
+        }    }
+
+    private void getProfile(UserProfile up) {
+        try {
+            Connection conn = Koneksi.Go();
+            this.stat = conn.prepareStatement("SELECT * FROM profil WHERE id_akun=?;");
+            if (up != null) {
+                this.stat.setInt(1, up.getId_akun());
+            } else {
+                System.out.println("UserProfile null! Tidak dapat mengambil profil.");
+                return;
+            }
+            this.rs = this.stat.executeQuery();
+
+            if (!rs.next()) {
+                System.out.println("Tidak ada data profil ditemukan untuk ID Akun: " + up.getId_akun());
+            } else {
+                do {
+                    up.setNama_lengkap(rs.getString("nama_lengkap"));
+                    up.setAlamat(rs.getString("alamat"));
+                    up.setId_profil(rs.getInt("id_profil"));
+                    up.setNo_hp(rs.getString("nomor_telepon"));
+                    up.setPath_gambar(rs.getString("path_gambar"));
+                    this.path_gambar = (rs.getString("path_gambar"));
+                    this.nama_lengkap = rs.getString("nama_lengkap");
+                } while (rs.next());
+                System.out.println("Profil berhasil dimuat: " + up.getNama_lengkap());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();  // Tampilkan kesalahan jika ada
+        }    }
 }

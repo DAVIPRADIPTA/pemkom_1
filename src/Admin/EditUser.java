@@ -79,7 +79,7 @@ public class EditUser extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Edit User");
@@ -377,7 +377,7 @@ public class EditUser extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
+        this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void TxtPassword2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtPassword2ActionPerformed

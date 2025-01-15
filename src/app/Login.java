@@ -6,13 +6,14 @@ package app;
 
 import Admin.PageAdmin;
 import Owner.PageOwner;
-import Kasir.Transaksi1;
+import Kasir.Transaksi;
 import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,6 +27,8 @@ public class Login extends javax.swing.JFrame {
    
     public Login() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
     }
 
     /**
@@ -191,7 +194,7 @@ public class Login extends javax.swing.JFrame {
                         this.setVisible(false);
                         break;
                     case "Kasir":
-                        Transaksi1 kasir = new Transaksi1(up);
+                        Transaksi kasir = new Transaksi(up);
                         kasir.setVisible(true);
                         this.setVisible(false);
                         break;
