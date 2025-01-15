@@ -120,6 +120,9 @@ public class Transaksi1 extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtIDKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtIDKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIDKeyTyped(evt);
             }
@@ -167,12 +170,12 @@ public class Transaksi1 extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+                        .addGap(129, 129, 129)
                         .addComponent(jButton1)
                         .addGap(34, 34, 34)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblTotalHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 756, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -326,7 +329,7 @@ public class Transaksi1 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //simpan transaksi penjualan ke db
         checkout();
@@ -334,16 +337,50 @@ public class Transaksi1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
-
         String kode = txtID.getText();
         DefaultTableModel model = (DefaultTableModel) tblCart.getModel();
 
         try {
+            // Tambahkan listener untuk mendeteksi perubahan tabel
+            model.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+            int row = e.getFirstRow();
+            int column = e.getColumn();
+
+            // Periksa apakah kolom kuantitas yang berubah
+            if (column == 2 && row >= 0) {
+                try {
+                    int qty = Integer.parseInt(tblCart.getValueAt(row, 2).toString());
+                    double price = Double.parseDouble(tblCart.getValueAt(row, 3).toString());
+                    int availableStock = Integer.parseInt(tblCart.getValueAt(row, 0).toString()); // Asumsikan stok produk diketahui dari tabel
+
+                    // Pastikan kuantitas positif dan stok mencukupi
+                    if (qty > 0) {
+                        if (qty <= availableStock) {
+                            tblCart.setValueAt(qty * price, row, 4); // Update harga total
+                            updateharga();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Stok tidak mencukupi!");
+                            tblCart.setValueAt(1, row, 2); // Reset ke nilai default
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Kuantitas harus lebih dari 0!");
+                        tblCart.setValueAt(1, row, 2); // Reset ke nilai default
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Kuantitas tidak valid!");
+                    tblCart.setValueAt(1, row, 2); // Reset ke nilai default
+                }
+            }
+            }
+            });
             // Koneksi ke database
             Connection K = Koneksi.Go();
-            String Q = "SELECT id_produk, nama_produk, harga_jual, stok FROM produk WHERE kode_produk='" + kode + "'";
-            Statement S = K.createStatement();
-            ResultSet R = S.executeQuery(Q);
+            String query = "SELECT id_produk, nama_produk, harga_jual, stok FROM produk WHERE kode_produk = ?";
+            PreparedStatement ps = K.prepareStatement(query);
+            ps.setLong(1, Long.parseLong(kode)); // Pastikan kode dikonversi ke tipe Long
+            ResultSet R = ps.executeQuery();
 
             // Proses setiap hasil query
             while (R.next()) {
@@ -351,7 +388,7 @@ public class Transaksi1 extends javax.swing.JFrame {
                 String pName = R.getString("nama_produk");
                 double pPr = R.getDouble("harga_jual");
                 int availableStock = R.getInt("stok"); // Ambil jumlah stok dari database
-
+                System.out.println(pName);
                 // Cek apakah produk sudah ada di keranjang
                 int rowCount = tblCart.getRowCount();
                 boolean exists = false;
@@ -395,41 +432,7 @@ public class Transaksi1 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
-        // Tambahkan listener untuk mendeteksi perubahan tabel
-        model.addTableModelListener(new TableModelListener() {
-        @Override
-        public void tableChanged(TableModelEvent e) {
-        int row = e.getFirstRow();
-        int column = e.getColumn();
-
-        // Periksa apakah kolom kuantitas yang berubah
-        if (column == 2 && row >= 0) {
-            try {
-                int qty = Integer.parseInt(tblCart.getValueAt(row, 2).toString());
-                double price = Double.parseDouble(tblCart.getValueAt(row, 3).toString());
-                int availableStock = Integer.parseInt(tblCart.getValueAt(row, 0).toString()); // Asumsikan stok produk diketahui dari tabel
-
-                // Pastikan kuantitas positif dan stok mencukupi
-                if (qty > 0) {
-                    if (qty <= availableStock) {
-                        tblCart.setValueAt(qty * price, row, 4); // Update harga total
-                        updateharga();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Stok tidak mencukupi!");
-                        tblCart.setValueAt(1, row, 2); // Reset ke nilai default
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Kuantitas harus lebih dari 0!");
-                    tblCart.setValueAt(1, row, 2); // Reset ke nilai default
-                }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Kuantitas tidak valid!");
-                tblCart.setValueAt(1, row, 2); // Reset ke nilai default
-            }
-        }
-    }
-});
-
+        
     }//GEN-LAST:event_txtIDActionPerformed
 
     private void txtIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyPressed
@@ -438,10 +441,11 @@ public class Transaksi1 extends javax.swing.JFrame {
             jTextField1.setText("");
             jTextField1.requestFocus();
         }
+//        addd_to_cart();
     }//GEN-LAST:event_txtIDKeyPressed
 
     private void txtIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyTyped
-
+//        addd_to_cart();
     }//GEN-LAST:event_txtIDKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -489,6 +493,15 @@ public class Transaksi1 extends javax.swing.JFrame {
   
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void txtIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyReleased
+        // TODO add your handling code here:
+//        addd_to_cart();
+//    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//        txtIDActionPerformed(null); // Panggil event ActionPerformed
+//    }
+    }//GEN-LAST:event_txtIDKeyReleased
+     
+    
     /**
      * @param args the command line arguments
      */
@@ -717,6 +730,11 @@ public class Transaksi1 extends javax.swing.JFrame {
         }
     }
 }
+
+    private void addd_to_cart() {
+       
+
+    }
 
 
 

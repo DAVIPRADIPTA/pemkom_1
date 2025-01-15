@@ -72,7 +72,7 @@ public class KinerjaKasir extends javax.swing.JPanel {
                 .addComponent(tglSampai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(101, 101, 101)
                 .addComponent(btnLoadChart)
-                .addContainerGap(303, Short.MAX_VALUE))
+                .addContainerGap(284, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,11 +92,11 @@ public class KinerjaKasir extends javax.swing.JPanel {
         panelChart.setLayout(panelChartLayout);
         panelChartLayout.setHorizontalGroup(
             panelChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 901, Short.MAX_VALUE)
+            .addGap(0, 882, Short.MAX_VALUE)
         );
         panelChartLayout.setVerticalGroup(
             panelChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 379, Short.MAX_VALUE)
+            .addGap(0, 429, Short.MAX_VALUE)
         );
 
         add(panelChart, java.awt.BorderLayout.CENTER);

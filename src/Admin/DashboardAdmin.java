@@ -178,7 +178,7 @@ public class DashboardAdmin extends javax.swing.JPanel {
              ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                int jumlahDataProduk = rs.getInt("jumlah_data");
+                String jumlahDataProduk = rs.getString("jumlah_data");
 //              System.out.println("Jumlah data di tabel akun: " + jumlahData);
                 jumlahProduk.setText(String.valueOf(jumlahDataProduk));
                         

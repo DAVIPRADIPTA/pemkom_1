@@ -274,7 +274,7 @@ public class ListProduct extends javax.swing.JPanel {
             int id = rs.getInt("id_produk");
             no++;
             String nama_produk = rs.getString("nama_produk");
-            int kode_produk = rs.getInt("kode_produk");
+            String kode_produk = rs.getString("kode_produk");
             String deskripsi = rs.getString("deskripsi");
             String kategori = rs.getString("kategori"); // Nama kategori
             int harga_jual = rs.getInt("harga_jual");

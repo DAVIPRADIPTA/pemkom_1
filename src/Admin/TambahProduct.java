@@ -30,8 +30,8 @@ public class TambahProduct extends javax.swing.JDialog {
      * Creates new form TambahProduct
      */
     
-    String fileName;
-    private File filePath;
+//    String fileName;
+//    private File filePath;
     public TambahProduct(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -293,19 +293,19 @@ public class TambahProduct extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-       try {
-            
-            JFileChooser chooser = new JFileChooser();
-            chooser.showOpenDialog(null);
-            File f = chooser.getSelectedFile();
-            ImageIcon icon = new ImageIcon(f.toString());
-            Image img = icon.getImage().getScaledInstance(label_foto.getWidth(),label_foto.getHeight(), Image.SCALE_DEFAULT);
-            ImageIcon ic = new ImageIcon(img);
-            label_foto.setIcon(ic);
-            System.out.println(ic);
-            this.fileName = f.getAbsolutePath();
-        } catch (Exception e) {
-        }
+//       try {
+//            
+//            JFileChooser chooser = new JFileChooser();
+//            chooser.showOpenDialog(null);
+//            File f = chooser.getSelectedFile();
+//            ImageIcon icon = new ImageIcon(f.toString());
+//            Image img = icon.getImage().getScaledInstance(label_foto.getWidth(),label_foto.getHeight(), Image.SCALE_DEFAULT);
+//            ImageIcon ic = new ImageIcon(img);
+//            label_foto.setIcon(ic);
+//            System.out.println(ic);
+//            this.fileName = f.getAbsolutePath();
+//        } catch (Exception e) {
+//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -424,23 +424,23 @@ public class TambahProduct extends javax.swing.JDialog {
     private void simpanProduct() {
         try {
 //            String kode_produk = TxtKode.getText();
-                    
-            String ext = this.fileName.substring(fileName.lastIndexOf('.')+1);
-            if (!ext.equals("png") && !ext.equals("jpeg") && !ext.equals("jpg")){
-                JOptionPane.showMessageDialog(null, "file harus berupa jpg, png,jpeg");
-            }else {
-                String newpath = "src/img_user";
-                File directory = new File(newpath);
-                if (!directory.exists()){
-                    directory.mkdirs();
-                }
-                File fileAwal = null;
-                File fileAkhir = null;
-                fileAwal = new File(fileName);
-                fileAkhir = new File(newpath+"/"+TxtKode.getText()+"."+ext); System.out.println(fileAkhir);
-                this.filePath = fileAkhir;
-                Files.copy(fileAwal.toPath(),fileAkhir.toPath());
-                Connection K = Koneksi.Go();
+            Connection K = Koneksi.Go();      
+//            String ext = this.fileName.substring(fileName.lastIndexOf('.')+1);
+//            if (!ext.equals("png") && !ext.equals("jpeg") && !ext.equals("jpg")){
+//                JOptionPane.showMessageDialog(null, "file harus berupa jpg, png,jpeg");
+//            }else {
+//                String newpath = "src/img";
+//                File directory = new File(newpath);
+//                if (!directory.exists()){
+//                    directory.mkdirs();
+//                }
+//                File fileAwal = null;
+//                File fileAkhir = null;
+////                fileAwal = new File(fileName);
+////                fileAkhir = new File(newpath+"/"+TxtKode.getText()+"."+ext); System.out.println(fileAkhir);
+////                this.filePath = fileAkhir;
+//                Files.copy(fileAwal.toPath(),fileAkhir.toPath());
+                
             String Q = "INSERT INTO produk ("
                     + "nama_produk,"
                     + "kode_produk,"
@@ -449,8 +449,8 @@ public class TambahProduct extends javax.swing.JDialog {
                     + "harga_jual,"
                     + "stok, "
                     + "harga_beli,"
-                    + "path_gambar,"
-                    + "suplayer )VALUES (?,?,?,?,?,?,?,?,?);";
+//                    + "path_gambar,"
+                    + "suplayer )VALUES (?,?,?,?,?,?,?,?);";
 //            System.out.println(Q);
             PreparedStatement ps = K.prepareStatement(Q);
             ps.setString(1, TxtNama.getText());
@@ -461,20 +461,22 @@ public class TambahProduct extends javax.swing.JDialog {
             ps.setDouble(5,Integer.parseInt(TxtHargaJual.getText())); 
             ps.setDouble(7,Integer.parseInt(TxtHargaBeli.getText())); 
             ps.setInt(6,Integer.parseInt(TxtStok.getText()));
-            ps.setString(8, filePath.toString());
+//            ps.setString(8, filePath.toString());
             String[] Y = TxtSuplayer.getSelectedItem().toString().split("-");
-            ps.setInt(9,Integer.parseInt(Y[0]));
+            ps.setInt(8,Integer.parseInt(Y[0]));
             System.out.println(Q);
             ps.executeUpdate();
             
 //            AdminPage.viewDataProduct(""); 
             JOptionPane.showMessageDialog(this, "berhasil");
-            }
+//            }
          } catch (SQLException e) {
-            //System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(this, e.getMessage());
-        } catch (IOException ex) {
-            Logger.getLogger(TambahProduct.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
+//        catch (IOException ex) {
+//            System.out.println(ex.getMessage());
+//            Logger.getLogger(TambahProduct.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 }

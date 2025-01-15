@@ -657,8 +657,7 @@ public class Product extends javax.swing.JPanel {
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Gagal memuat data pendapatan!", "Error", JOptionPane.ERROR_MESSAGE);
         ex.printStackTrace();
-    }
-}
+    }}
 
     private void loadPendapatanBulanIni() {
     LocalDate now = LocalDate.now();

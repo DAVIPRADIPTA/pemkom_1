@@ -49,8 +49,8 @@ public class EditProduct extends javax.swing.JDialog {
     public void setId(int id) {
         this.id = id;
     }
-    String fileName;
-    private File filePath;
+//    String fileName;
+//    private File filePath;
     public EditProduct(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -331,19 +331,19 @@ public class EditProduct extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        try {
-
-            JFileChooser chooser = new JFileChooser();
-            chooser.showOpenDialog(null);
-            File f = chooser.getSelectedFile();
-            ImageIcon icon = new ImageIcon(f.toString());
-            Image img = icon.getImage().getScaledInstance(label_foto.getWidth(),label_foto.getHeight(), Image.SCALE_DEFAULT);
-            ImageIcon ic = new ImageIcon(img);
-            label_foto.setIcon(ic);
-            System.out.println(ic);
-            this.fileName = f.getAbsolutePath();
-        } catch (Exception e) {
-        }
+//        try {
+//
+//            JFileChooser chooser = new JFileChooser();
+//            chooser.showOpenDialog(null);
+//            File f = chooser.getSelectedFile();
+//            ImageIcon icon = new ImageIcon(f.toString());
+//            Image img = icon.getImage().getScaledInstance(label_foto.getWidth(),label_foto.getHeight(), Image.SCALE_DEFAULT);
+//            ImageIcon ic = new ImageIcon(img);
+//            label_foto.setIcon(ic);
+//            System.out.println(ic);
+//            this.fileName = f.getAbsolutePath();
+//        } catch (Exception e) {
+//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -436,10 +436,10 @@ public class EditProduct extends javax.swing.JDialog {
             TxtDeskripsi.setText(RS.getString("deskripsi"));
 
             // Mengatur gambar produk
-            ImageIcon icon = new ImageIcon(RS.getString("path_gambar").toString());
-            Image img = icon.getImage().getScaledInstance(label_foto.getWidth(), label_foto.getHeight(), Image.SCALE_DEFAULT);
-            ImageIcon ic = new ImageIcon(img);
-            label_foto.setIcon(ic);
+//            ImageIcon icon = new ImageIcon(RS.getString("path_gambar").toString());
+//            Image img = icon.getImage().getScaledInstance(label_foto.getWidth(), label_foto.getHeight(), Image.SCALE_DEFAULT);
+//            ImageIcon ic = new ImageIcon(img);
+//            label_foto.setIcon(ic);
         }
     } catch (Exception e) {
         System.out.println(e.getMessage());
